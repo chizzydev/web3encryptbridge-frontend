@@ -1,7 +1,6 @@
 // src/App.jsx
-
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import WalletSelection from './pages/WalletSelection';
 import Success from './pages/Success';
@@ -10,21 +9,12 @@ import './styles/globals.css';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Landing Page */}
-        <Route path="/" element={<Home />} />
-
-        {/* Wallet Selection Page */}
-        <Route path="/wallet" element={<WalletSelection />} />
-
-        {/* Success Page */}
-        <Route path="/success" element={<Success />} />
-
-        {/* 404 Page */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/wallet" element={<WalletSelection />} />
+      <Route path="/success" element={<Success />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
