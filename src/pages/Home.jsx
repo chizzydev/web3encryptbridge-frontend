@@ -26,10 +26,10 @@ export default function Home() {
   const goToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white overflow-x-hidden w-full">
       <Navbar onConnectWallet={() => setModalOpen(true)} />
       
-      <main className="mt-[60px] md:mt-[82px]">
+      <main className="mt-[60px] md:mt-[82px] w-full overflow-x-hidden">
         <HeroSection onConnectWallet={() => setModalOpen(true)} />
         <FindSecureSection />
         <ExploreWeb3Section />

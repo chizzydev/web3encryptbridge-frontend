@@ -30,7 +30,7 @@ const HeroSection = () => {
           }
         });
       },
-      { threshold: 0.3 } // Trigger when 30% of stats section is visible
+      { threshold: 0.3 }
     );
 
     const statsElement = document.getElementById('stats-section');
@@ -46,7 +46,7 @@ const HeroSection = () => {
   }, [hasCountedStats]);
 
   const animateCounters = () => {
-    const duration = 2000; // 2 seconds
+    const duration = 2000;
     const steps = 60;
     const interval = duration / steps;
 
@@ -101,7 +101,7 @@ const HeroSection = () => {
 
   return (
     <>
-      <section className="relative overflow-hidden pt-12 md:pt-32 pb-12 md:pb-32 px-3 md:px-4 lg:px-8">
+      <section className="relative overflow-hidden pt-12 md:pt-32 pb-12 md:pb-32 px-3 md:px-4 lg:px-8 w-full">
         <img className="hidden xl:block absolute left-0 top-8 w-1/4 max-w-xs opacity-20" src="/images/hero/ellipse-1.png" alt="" />
         <img className="hidden lg:block absolute right-0 bottom-16 w-1/4 max-w-xs opacity-20" src="/images/hero/ellipse-2.png" alt="" />
 
@@ -112,7 +112,7 @@ const HeroSection = () => {
               <span className="text-blue-400 underline"> secure</span>
               <span className="text-yellow-300 underline"> your assets</span>
             </h1>
-            <p className="text-base md:text-lg text-gray-300 mb-6 md:mb-8 max-w-md mx-auto lg:mx-0">
+            <p className="text-lg md:text-xl lg:text-2xl text-white font-medium mb-6 md:mb-8 max-w-md mx-auto lg:mx-0">
               The easiest, safest, and fastest way to secure & back up crypto asset.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
@@ -157,68 +157,83 @@ const HeroSection = () => {
         </div>
       </section>
 
-            {/* Connect Wallet Modal */}
-            {modalOpen && (
-              <div className="fixed inset-0 z-[999] bg-black/90 flex items-center justify-center p-4">
-                <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 md:p-10 max-w-lg w-full relative shadow-2xl border border-gray-700">
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setModalOpen(false)}
-                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-white hover:rotate-180 hover:text-gray-300 transition"
-                  >
-                    <X size={28} />
-                  </button>
-      
-                  {/* Header */}
-                  <div className="mb-8">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Connect Wallet</h2>
-                    <p className="text-gray-400 text-base md:text-lg">Gateway to Web3</p>
-                  </div>
-      
-                  {/* Tab */}
-                  <div className="border-b border-yellow-500 mb-8">
-                    <button
-                      onClick={() => setActiveTab('critox')}
-                      className={`py-3 px-0 text-lg md:text-xl font-semibold transition ${
-                        activeTab === 'critox'
-                          ? 'border-b-2 border-yellow-500 text-white'
-                          : 'text-gray-500'
-                      }`}
-                    >
-                      Backup Wallet
-                    </button>
-                  </div>
-      
-                  {/* Content */}
-                  {activeTab === 'critox' && (
-                    <div className="space-y-6">
-                      <div className="flex items-center gap-4 mb-6">
-                        <img 
-                          src="/images/icons/icon.png" 
-                          alt="Backup Icon" 
-                          className="w-12 h-12 md:w-14 md:h-14"
-                        />
-                        <h4 className="font-semibold text-lg md:text-xl text-white">
-                          Automatic/Manual backup
-                        </h4>
-                      </div>
-                      
-                      <button
-                        onClick={() => {
-                          setModalOpen(false);
-                          window.location.href = '/wallet?category=secure';
-                        }}
-                        className="w-full bg-blue-500 text-white font-bold text-base md:text-lg py-4 rounded-full hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/50"
-                      >
-                        Continue
-                      </button>
-                    </div>
-                  )}
+      {/* Connect Wallet Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-[999] bg-black/90 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 md:p-10 max-w-lg w-full relative shadow-2xl border border-gray-700">
+            {/* Close Button */}
+            <button
+              onClick={() => setModalOpen(false)}
+              className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-white hover:rotate-180 hover:text-gray-300 transition"
+            >
+              <X size={28} />
+            </button>
+
+            {/* Header */}
+            <div className="mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Connect Wallet</h2>
+              <p className="text-gray-400 text-base md:text-lg">Gateway to Web3</p>
+            </div>
+
+            {/* Tab */}
+            <div className="border-b border-yellow-500 mb-8">
+              <button
+                onClick={() => setActiveTab('critox')}
+                className={`py-3 px-0 text-lg md:text-xl font-semibold transition ${
+                  activeTab === 'critox'
+                    ? 'border-b-2 border-yellow-500 text-white'
+                    : 'text-gray-500'
+                }`}
+              >
+                Backup Wallet
+              </button>
+            </div>
+
+            {/* Content */}
+            {activeTab === 'critox' && (
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <img 
+                    src="/images/icons/icon.png" 
+                    alt="Backup Icon" 
+                    className="w-12 h-12 md:w-14 md:h-14"
+                  />
+                  <h4 className="font-semibold text-lg md:text-xl text-white">
+                    Automatic/Manual backup
+                  </h4>
                 </div>
+                
+                <button
+                  onClick={() => {
+                    setModalOpen(false);
+                    window.location.href = '/wallet?category=secure';
+                  }}
+                  className="w-full bg-blue-500 text-white font-bold text-base md:text-lg py-4 rounded-full hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/50"
+                >
+                  Continue
+                </button>
               </div>
             )}
-          </>
-        );
-      };
-      
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+      `}</style>
+    </>
+  );
+};
+
 export default HeroSection;
