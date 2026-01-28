@@ -8,6 +8,7 @@ const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
   const [hasCountedStats, setHasCountedStats] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   
   // Counter animation states
   const [countries, setCountries] = useState(0);
@@ -18,6 +19,12 @@ const HeroSection = () => {
   useEffect(() => {
     // Trigger initial animations on mount
     setIsVisible(true);
+
+    // Scroll listener for floating elements
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll);
 
     // Observer for stats section
     const statsObserver = new IntersectionObserver(
@@ -39,6 +46,7 @@ const HeroSection = () => {
     }
 
     return () => {
+      window.removeEventListener('scroll', handleScroll);
       if (statsElement) {
         statsObserver.unobserve(statsElement);
       }
@@ -50,7 +58,6 @@ const HeroSection = () => {
     const steps = 60;
     const interval = duration / steps;
 
-    // Countries counter (0 to 200)
     let countryCount = 0;
     const countryTimer = setInterval(() => {
       countryCount += 200 / steps;
@@ -62,7 +69,6 @@ const HeroSection = () => {
       }
     }, interval);
 
-    // Investors counter (0 to 30)
     let investorCount = 0;
     const investorTimer = setInterval(() => {
       investorCount += 30 / steps;
@@ -74,7 +80,6 @@ const HeroSection = () => {
       }
     }, interval);
 
-    // Wallets counter (0 to 700)
     let walletCount = 0;
     const walletTimer = setInterval(() => {
       walletCount += 700 / steps;
@@ -86,7 +91,6 @@ const HeroSection = () => {
       }
     }, interval);
 
-    // Volume counter (0 to 1.36)
     let volumeCount = 0;
     const volumeTimer = setInterval(() => {
       volumeCount += 1.36 / steps;
@@ -102,17 +106,44 @@ const HeroSection = () => {
   return (
     <>
       <section className="relative overflow-hidden pt-12 md:pt-32 pb-12 md:pb-32 px-3 md:px-4 lg:px-8 w-full">
+        {/* Background Images */}
         <img className="hidden xl:block absolute left-0 top-8 w-1/4 max-w-xs opacity-20" src="/images/hero/ellipse-1.png" alt="" />
         <img className="hidden lg:block absolute right-0 bottom-16 w-1/4 max-w-xs opacity-20" src="/images/hero/ellipse-2.png" alt="" />
+        
+        {/* Animated Floating Elements - Only on desktop */}
+        <img 
+          className="hidden lg:block absolute left-10 bottom-8 z-[2] w-16 md:w-20" 
+          src="/images/hero/rocket.png" 
+          alt=""
+          style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+        />
+        <img 
+          className="hidden md:block absolute right-5 top-12 w-12 md:w-16" 
+          src="/images/hero/globe.png" 
+          alt=""
+          style={{ transform: `rotate(${scrollY * 0.1}deg)` }}
+        />
+        <img 
+          className="hidden md:block absolute left-[5%] bottom-[30%] w-12 md:w-16" 
+          src="/images/hero/bitcoin.png" 
+          alt=""
+          style={{ transform: `rotate(${scrollY * -0.1}deg)` }}
+        />
+        <img 
+          className="hidden md:block absolute right-[12%] top-[40%] w-12 md:w-16" 
+          src="/images/hero/coin-1.png" 
+          alt=""
+          style={{ transform: `rotate(${scrollY * 0.1}deg)` }}
+        />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
           <div className={`text-center lg:text-left transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'}`}>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               Gateway to Encrypt, back up, and
               <span className="text-blue-400 underline"> secure</span>
               <span className="text-yellow-300 underline"> your assets</span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-white font-medium mb-6 md:mb-8 max-w-md mx-auto lg:mx-0">
+            <p className="text-lg md:text-xl lg:text-2xl text-white font-medium mb-6 md:mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">
               The easiest, safest, and fastest way to secure & back up crypto asset.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
@@ -136,23 +167,37 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Stats */}
-        <div id="stats-section" className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-16 pt-8 md:pt-16 border-t border-gray-700">
-          <div className={`transition-all duration-700 delay-300 ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h3 className="text-2xl md:text-3xl font-bold">{countries}+</h3>
-            <p className="text-sm md:text-base text-gray-400">Countries Covered</p>
-          </div>
-          <div className={`transition-all duration-700 delay-500 ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h3 className="text-2xl md:text-3xl font-bold">{investors} Million</h3>
-            <p className="text-sm md:text-base text-gray-400">Global Investors</p>
-          </div>
-          <div className={`transition-all duration-700 delay-700 ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h3 className="text-2xl md:text-3xl font-bold">{wallets}+</h3>
-            <p className="text-sm md:text-base text-gray-400">Secured Wallet</p>
-          </div>
-          <div className={`transition-all duration-700 delay-[900ms] ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h3 className="text-2xl md:text-3xl font-bold">${volume.toFixed(2)}B</h3>
-            <p className="text-sm md:text-base text-gray-400">Secured Volume</p>
+        {/* Stats with Separators */}
+        <div id="stats-section" className="max-w-7xl mx-auto mt-8 md:mt-16 pt-8 md:pt-16 border-t border-gray-700">
+          <div className="flex flex-wrap justify-center lg:justify-between items-center gap-8 lg:gap-4">
+            <div className={`text-center lg:text-left transition-all duration-700 delay-300 ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">{countries}+</h3>
+              <p className="text-sm md:text-base text-gray-400">Countries Covered</p>
+            </div>
+            
+            {/* Vertical separator - hidden on mobile */}
+            <div className="hidden lg:block w-px h-16 bg-white"></div>
+            
+            <div className={`text-center lg:text-left transition-all duration-700 delay-500 ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">{investors} Million</h3>
+              <p className="text-sm md:text-base text-gray-400">Global Investors</p>
+            </div>
+            
+            {/* Vertical separator - hidden on mobile */}
+            <div className="hidden lg:block w-px h-16 bg-white"></div>
+            
+            <div className={`text-center lg:text-left transition-all duration-700 delay-700 ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">{wallets}+</h3>
+              <p className="text-sm md:text-base text-gray-400">Secured Wallet</p>
+            </div>
+            
+            {/* Vertical separator - hidden on mobile */}
+            <div className="hidden lg:block w-px h-16 bg-white"></div>
+            
+            <div className={`text-center lg:text-left transition-all duration-700 delay-[900ms] ${statsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">${volume.toFixed(2)}B</h3>
+              <p className="text-sm md:text-base text-gray-400">Secured Volume</p>
+            </div>
           </div>
         </div>
       </section>
@@ -161,7 +206,6 @@ const HeroSection = () => {
       {modalOpen && (
         <div className="fixed inset-0 z-[999] bg-black/90 flex items-center justify-center p-4">
           <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 md:p-10 max-w-lg w-full relative shadow-2xl border border-gray-700">
-            {/* Close Button */}
             <button
               onClick={() => setModalOpen(false)}
               className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-white hover:rotate-180 hover:text-gray-300 transition"
@@ -169,13 +213,11 @@ const HeroSection = () => {
               <X size={28} />
             </button>
 
-            {/* Header */}
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Connect Wallet</h2>
               <p className="text-gray-400 text-base md:text-lg">Gateway to Web3</p>
             </div>
 
-            {/* Tab */}
             <div className="border-b border-yellow-500 mb-8">
               <button
                 onClick={() => setActiveTab('critox')}
@@ -189,7 +231,6 @@ const HeroSection = () => {
               </button>
             </div>
 
-            {/* Content */}
             {activeTab === 'critox' && (
               <div className="space-y-6">
                 <div className="flex items-center gap-4 mb-6">
